@@ -1,17 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Minimalista</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .titulo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .campo {
+            margin-bottom: 15px;
+        }
+        .campo label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .campo input, .campo textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        .campo input:focus, .campo textarea:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        .botao {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .botao:hover {
+            background-color: #0056b3;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 5px;
+            border: 1px solid #b2f2b2;
+            text-align: center;
+        }
+    </style>
+</head>
 <body>
 
-<h2>JavaScript Operators</h2>
+    <div class="container">
+        <div class="titulo">Formulário Minimalista</div>
+        
+        <form class="formulario" id="meuFormulario">
+            <div class="campo">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" required>
+            </div>
+            <div class="campo">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="campo">
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="botao">Enviar</button>
+            <button type="button" class="botao" onclick="document.getElementById('meuFormulario').reset()">Cancelar</button>
+            <button type="button" class="botao" id="botao3">Botão 3</button>
+        </form>
 
-<p>JavaScript uses arithmetic operators to compute values (just like algebra).</p>
-<h1 id="teste"></h1>
+        <div class="resultado" id="resultado"></div>
+    </div>
 
-<p id="teste1"></p>
-<script>
-    document.getElementById("teste").innerHTML =(5*40/40);
-    document.getElementById("teste1").innerHTML =( 10-10);
-</script>
+    <script>
+        document.getElementById('meuFormulario').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const mensagem = document.getElementById('mensagem').value;
+            document.getElementById('resultado').innerHTML = `<strong>Obrigado, ${nome}!</strong><p>Seu e-mail: ${email}</p><p>Mensagem: ${mensagem}</p>`;
+            this.reset();
+        });
 
+        document.getElementById('botao3').addEventListener('click', function() {
+            alert('Botão 3 clicado!');
+        });
+    </script>
 </body>
 </html>
+
