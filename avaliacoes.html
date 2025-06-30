@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor na Hora - Avaliações</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> </head>
+<body>
+    <header>
+        <h1>Sabor na Hora</h1>
+        <p>A lanchonete e pizzaria que te entende!</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html#cardapio">Cardápio</a></li>
+            <li><a href="index.html#promocoes">Promoções</a></li>
+            <li><a href="avaliacoes.html">Avaliações</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+            <li><a href="index.html#login">Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="reviews-section">
+        <h2>Deixe sua Avaliação!</h2>
+        <div class="review-form">
+            <label for="reviewerName">Seu Nome:</label>
+            <input type="text" id="reviewerName" placeholder="Digite seu nome" required>
+
+            <label for="reviewComment">Seu Comentário:</label>
+            <textarea id="reviewComment" placeholder="Compartilhe sua experiência..." rows="5" required></textarea>
+
+            <label>Sua Nota:</label>
+            <div class="rating-stars">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="fa-solid fa-star"></label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="fa-solid fa-star"></label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="fa-solid fa-star"></label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="fa-solid fa-star"></label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="fa-solid fa-star"></label>
+            </div>
+
+            <button class="submit-review-btn">Enviar Avaliação</button>
+        </div>
+
+        <h2>O que nossos clientes dizem:</h2>
+        <div id="existing-reviews">
+            <div class="review-item">
+                <div class="review-header">
+                    <span class="reviewer-name">Maria Silva</span>
+                    <span class="review-date">28 de Junho de 2025</span>
+                </div>
+                <div class="review-rating">
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                </div>
+                <p class="review-comment">"As pizzas são incríveis! A de calabresa é a melhor da cidade. Atendimento super rápido e gentil. Voltarei sempre!"</p>
+            </div>
+
+            <div class="review-item">
+                <div class="review-header">
+                    <span class="reviewer-name">João Pereira</span>
+                    <span class="review-date">27 de Junho de 2025</span>
+                </div>
+                <div class="review-rating">
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-regular fa-star"></span> </div>
+                <p class="review-comment">"O X-Salada é muito bom, mas a entrega demorou um pouco mais do que o esperado. Tirando isso, tudo ótimo!"</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Sabor na Hora. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Lógica JavaScript SIMULADA para envio de avaliação
+        document.querySelector('.submit-review-btn').addEventListener('click', () => {
+            const name = document.getElementById('reviewerName').value;
+            const comment = document.getElementById('reviewComment').value;
+            const rating = document.querySelector('input[name="rating"]:checked');
+
+            if (name && comment && rating) {
+                alert(`Avaliação de ${name} com nota ${rating.value} enviada! (Em um sistema real, isso seria salvo no backend)`);
+                // Em um sistema real, os dados seriam enviados para o backend
+                document.getElementById('reviewerName').value = '';
+                document.getElementById('reviewComment').value = '';
+                if (rating) rating.checked = false; // Desmarca a estrela
+                // O ideal seria recarregar as avaliações do backend
+            } else {
+                alert('Por favor, preencha todos os campos e selecione uma nota para a avaliação.');
+            }
+        });
+    </script>
+</body>
+</html>
