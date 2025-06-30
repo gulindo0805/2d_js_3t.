@@ -6,11 +6,15 @@
     <title>Sabor na Hora - Avaliações</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 <body>
     <header>
         <h1>Sabor na Hora</h1>
         <p>A lanchonete e pizzaria que te entende!</p>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema escuro/claro">
+            <i class="fas fa-moon"></i>
+        </button>
     </header>
 
     <nav>
@@ -71,7 +75,8 @@
                     <span class="star fa-solid fa-star"></span>
                     <span class="star fa-solid fa-star"></span>
                     <span class="star fa-solid fa-star"></span>
-                    <span class="star fa-regular fa-star"></span> </div>
+                    <span class="star fa-regular fa-star"></span>
+                </div>
                 <p class="review-comment">"O X-Salada é muito bom, mas a entrega demorou um pouco mais do que o esperado. Tirando isso, tudo ótimo!"</p>
             </div>
 
@@ -97,22 +102,97 @@
     </footer>
 
     <script>
-        // Lógica JavaScript SIMULADA para envio de avaliação
-        document.querySelector('.submit-review-btn').addEventListener('click', () => {
-            const name = document.getElementById('reviewerName').value;
-            const comment = document.getElementById('reviewComment').value;
-            const ratingInput = document.querySelector('input[name="rating"]:checked');
-            const ratingValue = ratingInput ? ratingInput.value : null;
+        // Lógica JavaScript para o tema escuro (replicada para todas as páginas)
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+        const themeIcon = themeToggleBtn.querySelector('i');
 
-            if (name && comment && ratingValue) {
-                alert(`Avaliação de ${name} com nota ${ratingValue} enviada! (Em um sistema real, isso seria salvo no backend)`);
-                // Em um sistema real, os dados seriam enviados para o backend
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            if (savedTheme === 'dark-theme') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('theme', '');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Lógica JavaScript para enviar e exibir avaliações
+        document.querySelector('.submit-review-btn').addEventListener('click', () => {
+            const name = document.getElementById('reviewerName').value.trim();
+            const comment = document.getElementById('reviewComment').value.trim();
+            const ratingInput = document.querySelector('input[name="rating"]:checked');
+            const ratingValue = ratingInput ? parseInt(ratingInput.value) : 0;
+
+            if (name && comment && ratingValue > 0) {
+                // Em um sistema real, aqui você enviaria os dados para o backend.
+                // Por enquanto, vamos simular a exibição localmente.
+
+                const reviewContainer = document.getElementById('existing-reviews');
+                const newReview = document.createElement('div');
+                newReview.classList.add('review-item');
+
+                // Data atual para a avaliação
+                const today = new Date();
+                const options = { day: '2-digit', month: 'long', year: 'numeric' };
+                const formattedDate = today.toLocaleDateString('pt-BR', options);
+
+                let starsHtml = '';
+                for (let i = 0; i < 5; i++) {
+                    if (i < ratingValue) {
+                        starsHtml += '<span class="star fa-solid fa-star"></span>';
+                    } else {
+                        starsHtml += '<span class="star fa-regular fa-star"></span>';
+                    }
+                }
+
+                newReview.innerHTML = `
+                    <div class="review-header">
+                        <span class="reviewer-name">${name}</span>
+                        <span class="review-date">${formattedDate}</span>
+                    </div>
+                    <div class="review-rating">
+                        ${starsHtml}
+                    </div>
+                    <p class="review-comment">"${comment}"</p>
+                `;
+
+                // Adiciona a nova avaliação no topo
+                reviewContainer.prepend(newReview);
+
+                // Limpa o formulário
                 document.getElementById('reviewerName').value = '';
                 document.getElementById('reviewComment').value = '';
-                if (ratingInput) ratingInput.checked = false; // Desmarca a estrela
-                // O ideal seria recarregar as avaliações do backend
+                if (ratingInput) ratingInput.checked = false;
+
+                alert('Sua avaliação foi enviada com sucesso! (Visualização local)');
             } else {
-                alert('Por favor, preencha todos os campos e selecione uma nota para a avaliação.');
+                alert('Por favor, preencha seu nome, comentário e selecione uma nota para a avaliação.');
+            }
+        });
+
+        // Lógica para carregar o tema da página principal
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.classList.add(savedTheme);
+                const themeIcon = document.getElementById('theme-toggle').querySelector('i');
+                if (savedTheme === 'dark-theme') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
             }
         });
     </script>
