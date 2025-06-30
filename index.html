@@ -17,7 +17,8 @@
         <ul>
             <li><a href="#cardapio">Cardápio</a></li>
             <li><a href="#promocoes">Promoções</a></li>
-            <li><a href="avaliacoes.html">Avaliações</a></li> <li><a href="#contato">Contato</a></li>
+            <li><a href="avaliacoes.html">Avaliações</a></li>
+            <li><a href="#contato">Contato</a></li>
             <li><a href="#login">Login</a></li>
         </ul>
     </nav>
@@ -26,17 +27,10 @@
         <aside class="sidebar">
             <h2>Seu Pedido</h2>
             <div id="cart-items">
-                <div class="cart-item">
-                    <span>1x Pizza de Calabresa</span>
-                    <span>R$ 45,00</span>
+                <p style="text-align: center; color: #777;">Seu carrinho está vazio.</p>
                 </div>
-                <div class="cart-item">
-                    <span>1x X-Salada</span>
-                    <span>R$ 25,00</span>
-                </div>
-            </div>
             <div class="cart-total">
-                Total: R$ 70,00
+                Total: R$ 0,00
             </div>
             <button class="checkout-btn">Finalizar Pedido</button>
         </aside>
@@ -44,8 +38,7 @@
         <main class="main-content">
             <div class="search-bar">
                 <input type="text" placeholder="Buscar no cardápio...">
-                <button><i class="fas fa-search"></i> Pesquisar</button>
-            </div>
+                <i class="fas fa-search"></i> <button><i class="fas fa-search"></i></button> </div>
 
             <section id="cardapio" class="category">
                 <h2>Pizzas</h2>
@@ -99,35 +92,28 @@
 
     <script>
         // Lógica JavaScript SIMULADA para interatividade
-        // EM UM SISTEMA REAL, ESTA LÓGICA SERIA MUITO MAIS COMPLEXA
-        // E ENVOLVERIA COMUNICAÇÃO COM UM BACK-END E BANCO DE DADOS.
-
-        let cart = [
-            { name: "Pizza de Calabresa", price: 45.00, qty: 1 },
-            { name: "X-Salada", price: 25.00, qty: 1 }
-        ];
+        let cart = []; // Começa com o carrinho vazio
 
         function updateCartDisplay() {
             const cartItemsContainer = document.getElementById('cart-items');
-            cartItemsContainer.innerHTML = ''; // Limpa o carrinho atual
+            cartItemsContainer.innerHTML = '';
             let total = 0;
-
-            cart.forEach(item => {
-                const cartItemDiv = document.createElement('div');
-                cartItemDiv.classList.add('cart-item');
-                cartItemDiv.innerHTML = `
-                    <span>${item.qty}x ${item.name}</span>
-                    <span>R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</span>
-                `;
-                cartItemsContainer.appendChild(cartItemDiv);
-                total += item.price * item.qty;
-            });
-
-            document.querySelector('.cart-total').innerHTML = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
 
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p style="text-align: center; color: #777;">Seu carrinho está vazio.</p>';
+            } else {
+                cart.forEach(item => {
+                    const cartItemDiv = document.createElement('div');
+                    cartItemDiv.classList.add('cart-item');
+                    cartItemDiv.innerHTML = `
+                        <span>${item.qty}x ${item.name}</span>
+                        <span>R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</span>
+                    `;
+                    cartItemsContainer.appendChild(cartItemDiv);
+                    total += item.price * item.qty;
+                });
             }
+            document.querySelector('.cart-total').innerHTML = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
         }
 
         document.querySelectorAll('.add-to-cart-btn').forEach(button => {
@@ -149,9 +135,8 @@
         document.querySelector('.checkout-btn').addEventListener('click', () => {
             if (cart.length > 0) {
                 alert('Processando seu pedido... (Em um sistema real, aqui você iria para uma página de checkout/pagamento)');
-                // Em um sistema real, os dados do carrinho seriam enviados para o backend
                 console.log('Pedido a ser enviado:', cart);
-                cart = []; // Esvazia o carrinho após "finalizar"
+                cart = [];
                 updateCartDisplay();
             } else {
                 alert('Seu carrinho está vazio! Adicione itens antes de finalizar.');
@@ -161,10 +146,9 @@
         document.querySelector('.search-bar button').addEventListener('click', () => {
             const searchTerm = document.querySelector('.search-bar input[type="text"]').value;
             alert(`Pesquisando por: "${searchTerm}" (Em um sistema real, isso filtraria o cardápio)`);
-            // Lógica de filtragem ou busca no backend viria aqui
         });
 
-        // Inicializa o display do carrinho
+        // Inicializa o display do carrinho ao carregar a página
         updateCartDisplay();
     </script>
 </body>
