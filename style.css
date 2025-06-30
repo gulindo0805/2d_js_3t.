@@ -7,6 +7,7 @@
     --cor-card-fundo: #FFF; /* Branco para cards */
     --sombra-leve: 0 4px 8px rgba(0,0,0,0.1);
     --sombra-media: 0 6px 12px rgba(0,0,0,0.15);
+    --sombra-forte: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 /* Estilos globais do corpo */
@@ -36,6 +37,7 @@ header h1 {
     margin: 0;
     font-size: 2.8rem;
     letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 header p {
@@ -58,7 +60,7 @@ nav ul {
     margin: 0;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Para responsividade em nav */
+    flex-wrap: wrap;
 }
 
 nav ul li {
@@ -86,25 +88,35 @@ nav ul li a:hover {
     margin: 2.5rem auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 30px; /* Aumenta o espaçamento entre as colunas */
-    flex-grow: 1; /* Permite que o container ocupe o espaço restante */
+    gap: 30px;
+    flex-grow: 1;
 }
 
-.main-content {
-    flex: 3;
-    min-width: 65%; /* Garante mais espaço para o cardápio */
-}
-
+/* Barra Lateral (Meu Pedido) - AGORA À ESQUERDA */
 .sidebar {
     flex: 1;
-    min-width: 320px; /* Aumenta um pouco a largura mínima da sidebar */
+    min-width: 320px;
     background-color: var(--cor-card-fundo);
     padding: 25px;
     border-radius: 10px;
     box-shadow: var(--sombra-media);
     position: sticky;
-    top: 30px; /* Fixa a barra lateral */
-    align-self: flex-start; /* Alinha no topo */
+    top: 30px;
+    align-self: flex-start;
+    order: -1; /* Coloca a sidebar à esquerda em layouts flexíveis */
+    animation: fadeIn 0.8s ease-out; /* Adiciona uma pequena animação */
+}
+
+/* Conteúdo Principal (Cardápio) */
+.main-content {
+    flex: 3;
+    min-width: 65%;
+}
+
+/* Animação para elementos que aparecem */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Títulos das seções */
@@ -115,6 +127,8 @@ h2 {
     padding-bottom: 12px;
     margin-top: 0;
     font-size: 2rem;
+    text-align: center; /* Centraliza títulos */
+    margin-bottom: 30px;
 }
 
 /* Categorias do cardápio */
@@ -141,11 +155,12 @@ h2 {
 }
 
 .menu-item img {
-    width: 120px; /* Imagens um pouco maiores */
+    width: 120px;
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
     border: 1px solid #eee;
+    flex-shrink: 0; /* Impede a imagem de encolher */
 }
 
 .item-details {
@@ -170,7 +185,7 @@ h2 {
     font-size: 1.3em;
     text-align: right;
     white-space: nowrap;
-    min-width: 80px; /* Garante que o preço tenha um espaço mínimo */
+    min-width: 80px;
 }
 
 /* Botões de ação */
@@ -223,45 +238,71 @@ h2 {
     border-top: 2px solid var(--cor-secundaria);
 }
 
-/* Barra de Pesquisa */
+/* Barra de Pesquisa MELHORADA */
 .search-bar {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     display: flex;
-    gap: 10px;
+    position: relative; /* Para posicionar o ícone */
+    box-shadow: var(--sombra-leve);
+    border-radius: 10px;
+    overflow: hidden; /* Garante que a sombra fique dentro do limite */
 }
 
 .search-bar input[type="text"] {
     flex-grow: 1;
-    padding: 12px 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px 50px 15px 20px; /* Padding para o ícone */
+    border: none; /* Remove borda padrão */
+    font-size: 1.1em;
+    background-color: var(--cor-card-fundo);
+    color: var(--cor-texto);
+}
+
+.search-bar input[type="text"]::placeholder {
+    color: #999;
 }
 
 .search-bar input[type="text"]:focus {
-    border-color: var(--cor-principal);
-    box-shadow: 0 0 0 3px rgba(255, 87, 51, 0.2);
     outline: none;
+    box-shadow: inset 0 0 0 2px var(--cor-principal); /* Borda interna no foco */
 }
 
 .search-bar button {
     background-color: var(--cor-principal);
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 15px 25px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 1.1em;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-bar button:hover {
     background-color: #e04a2c;
 }
 
-/* Estilos para a página de Avaliações */
+/* Ícone de pesquisa dentro do input (opcional, mas legal!) */
+.search-bar .fa-search {
+    position: absolute;
+    right: 80px; /* Ajusta conforme o padding do botão */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 1.2em;
+    pointer-events: none; /* Garante que o clique passe para o input */
+}
+.search-bar button .fa-search { /* Ícone dentro do botão, se preferir */
+    position: static;
+    transform: none;
+    margin-right: 8px;
+    color: white;
+}
+
+
+/* Estilos para a página de Avaliações MELHORADOS */
 .reviews-section {
     width: 90%;
     max-width: 900px;
@@ -274,43 +315,55 @@ h2 {
 }
 
 .review-form {
-    margin-bottom: 40px;
-    padding-bottom: 30px;
+    margin-bottom: 50px;
+    padding-bottom: 40px;
     border-bottom: 1px solid #eee;
+    text-align: center; /* Centraliza o formulário */
 }
 
 .review-form label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: bold;
     color: var(--cor-texto);
+    font-size: 1.1em;
 }
 
 .review-form input[type="text"],
-.review-form textarea,
-.review-form input[type="number"] {
-    width: calc(100% - 24px); /* Ajusta o padding */
-    padding: 12px;
-    margin-bottom: 15px;
+.review-form textarea {
+    width: calc(100% - 40px); /* Ajusta o padding e borda */
+    padding: 15px;
+    margin-bottom: 20px;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
+    border-radius: 10px;
+    font-size: 1.1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-form input[type="text"]:focus,
+.review-form textarea:focus {
+    border-color: var(--cor-principal);
+    box-shadow: 0 0 0 3px rgba(255, 87, 51, 0.2);
+    outline: none;
 }
 
 .review-form textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
 }
 
 .rating-stars {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    display: inline-block; /* Para centralizar as estrelas */
 }
 
 .rating-stars label {
     display: inline-block;
     cursor: pointer;
-    font-size: 1.5em;
+    font-size: 2.2em; /* Estrelas maiores */
     color: #ccc; /* Estrela vazia */
+    margin: 0 3px;
+    transition: color 0.2s ease;
 }
 
 .rating-stars label:hover,
@@ -324,41 +377,58 @@ h2 {
     display: none;
 }
 
+.submit-review-btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 50px; /* Botão mais arredondado */
+    box-shadow: var(--sombra-leve);
+}
+
+
 .review-item {
     background-color: #fcfcfc;
     border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    animation: fadeIn 0.8s ease-out;
 }
 
 .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .reviewer-name {
     font-weight: bold;
     color: var(--cor-principal);
-    font-size: 1.1em;
+    font-size: 1.2em;
+    text-transform: capitalize; /* Primeira letra maiúscula */
 }
 
 .review-date {
-    font-size: 0.9em;
+    font-size: 0.95em;
     color: #888;
 }
 
+.review-rating {
+    margin-bottom: 10px;
+}
 .review-rating .star {
     color: var(--cor-principal);
-    font-size: 1.2em;
+    font-size: 1.4em;
 }
 
 .review-comment {
-    margin-top: 10px;
+    margin-top: 15px;
     color: #555;
+    line-height: 1.7;
+    border-left: 3px solid var(--cor-secundaria);
+    padding-left: 15px;
+    font-style: italic;
 }
 
 /* Rodapé */
@@ -371,7 +441,7 @@ footer {
     box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
 }
 
-/* Responsividade Avançada */
+/* Responsividade Aprimorada */
 @media (max-width: 1024px) {
     .container {
         flex-direction: column;
@@ -401,11 +471,14 @@ footer {
         display: block;
     }
     .menu-item {
-        flex-direction: column;
+        flex-direction: column; /* Coloca imagem e detalhes em coluna */
         text-align: center;
     }
     .menu-item img {
         margin-bottom: 15px;
+    }
+    .item-details {
+        text-align: center; /* Centraliza o texto do item */
     }
     .item-price {
         width: 100%;
@@ -415,6 +488,26 @@ footer {
     .add-to-cart-btn {
         width: 100%;
         margin-top: 10px;
+    }
+    .search-bar {
+        flex-direction: column;
+    }
+    .search-bar input[type="text"] {
+        padding-right: 20px; /* Remove padding extra para o ícone */
+    }
+    .search-bar .fa-search {
+        right: 20px; /* Ajusta ícone para o canto direito */
+    }
+    .search-bar button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .reviews-section {
+        padding: 20px;
+    }
+    .review-form input[type="text"],
+    .review-form textarea {
+        width: calc(100% - 30px);
     }
 }
 
@@ -446,11 +539,11 @@ footer {
         padding: 10px 15px;
         font-size: 0.9em;
     }
-    .search-bar {
-        flex-direction: column;
+    .review-form input[type="text"],
+    .review-form textarea {
+        width: calc(100% - 20px);
     }
-    .search-bar button {
-        width: 100%;
-        margin-top: 10px;
+    .rating-stars label {
+        font-size: 1.8em; /* Estrelas menores em telas muito pequenas */
     }
 }
