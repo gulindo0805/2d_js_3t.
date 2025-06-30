@@ -1,14 +1,46 @@
 /* Variáveis de cores e sombras */
 :root {
+    /* Cores do Tema Claro (Padrão) */
     --cor-principal: #FF5733; /* Laranja avermelhado, vibrante */
     --cor-secundaria: #FFC300; /* Amarelo quente */
     --cor-fundo: #F8F8F8; /* Cinza claro, quase branco */
     --cor-texto: #333; /* Cinza escuro para texto */
     --cor-card-fundo: #FFF; /* Branco para cards */
+    --cor-borda-card: #eee;
+    --cor-link-hover: #e04a2c;
+    --cor-input-borda: #ddd;
+    --cor-input-focus-shadow: rgba(255, 87, 51, 0.2);
+    --cor-placeholder: #999;
+    --cor-separador: #ddd;
+    --cor-estrelas-vazias: #ccc;
+    --cor-comentario-borda: var(--cor-secundaria);
+    --cor-comentario-texto: #555;
     --sombra-leve: 0 4px 8px rgba(0,0,0,0.1);
     --sombra-media: 0 6px 12px rgba(0,0,0,0.15);
     --sombra-forte: 0 10px 20px rgba(0,0,0,0.2);
 }
+
+/* Tema Escuro */
+body.dark-theme {
+    --cor-principal: #FF8C00; /* Laranja mais vibrante no escuro */
+    --cor-secundaria: #FFD700; /* Amarelo ouro */
+    --cor-fundo: #1a1a1a; /* Cinza escuro quase preto */
+    --cor-texto: #f0f0f0; /* Branco suave para texto */
+    --cor-card-fundo: #2a2a2a; /* Cinza mais escuro para cards */
+    --cor-borda-card: #444;
+    --cor-link-hover: #ffa040;
+    --cor-input-borda: #555;
+    --cor-input-focus-shadow: rgba(255, 140, 0, 0.3);
+    --cor-placeholder: #bbb;
+    --cor-separador: #555;
+    --cor-estrelas-vazias: #666;
+    --cor-comentario-borda: var(--cor-secundaria);
+    --cor-comentario-texto: #ccc;
+    --sombra-leve: 0 4px 8px rgba(0,0,0,0.3);
+    --sombra-media: 0 6px 12px rgba(0,0,0,0.4);
+    --sombra-forte: 0 10px 20px rgba(0,0,0,0.5);
+}
+
 
 /* Estilos globais do corpo */
 body {
@@ -21,6 +53,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Garante que o footer fique no final */
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transição suave do tema */
 }
 
 /* Cabeçalho */
@@ -30,6 +63,7 @@ header {
     padding: 1.5rem 0;
     text-align: center;
     box-shadow: var(--sombra-media);
+    position: relative; /* Para o botão de tema */
 }
 
 header h1 {
@@ -45,6 +79,27 @@ header p {
     font-size: 1.1rem;
     opacity: 0.9;
 }
+
+/* Botão de Tema */
+.theme-toggle-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.3s ease;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+    color: var(--cor-secundaria); /* Mudar a cor ao passar o mouse */
+}
+
 
 /* Navegação */
 nav {
@@ -77,8 +132,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: var(--cor-principal);
-    border-bottom: 2px solid var(--cor-principal);
+    color: var(--cor-link-hover);
+    border-bottom: 2px solid var(--cor-link-hover);
 }
 
 /* Container principal (para cardápio e carrinho) */
@@ -105,6 +160,7 @@ nav ul li a:hover {
     align-self: flex-start;
     order: -1; /* Coloca a sidebar à esquerda em layouts flexíveis */
     animation: fadeIn 0.8s ease-out; /* Adiciona uma pequena animação */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 /* Conteúdo Principal (Cardápio) */
@@ -127,8 +183,9 @@ h2 {
     padding-bottom: 12px;
     margin-top: 0;
     font-size: 2rem;
-    text-align: center; /* Centraliza títulos */
+    text-align: center;
     margin-bottom: 30px;
+    transition: color 0.5s ease;
 }
 
 /* Categorias do cardápio */
@@ -146,7 +203,7 @@ h2 {
     box-shadow: var(--sombra-leve);
     align-items: center;
     gap: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.5s ease;
 }
 
 .menu-item:hover {
@@ -159,8 +216,8 @@ h2 {
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
-    border: 1px solid #eee;
-    flex-shrink: 0; /* Impede a imagem de encolher */
+    border: 1px solid var(--cor-borda-card);
+    flex-shrink: 0;
 }
 
 .item-details {
@@ -171,12 +228,15 @@ h2 {
     margin: 0 0 8px 0;
     color: var(--cor-texto);
     font-size: 1.4rem;
+    transition: color 0.5s ease;
 }
 
 .item-details p {
     margin: 0 0 12px 0;
     font-size: 1em;
-    color: #666;
+    color: var(--cor-texto); /* Usa a cor do texto para melhor contraste no tema escuro */
+    opacity: 0.8;
+    transition: color 0.5s ease;
 }
 
 .item-price {
@@ -186,6 +246,7 @@ h2 {
     text-align: right;
     white-space: nowrap;
     min-width: 80px;
+    transition: color 0.5s ease;
 }
 
 /* Botões de ação */
@@ -202,7 +263,7 @@ h2 {
 }
 
 .add-to-cart-btn:hover, .checkout-btn:hover, .submit-review-btn:hover {
-    background-color: #e04a2c;
+    background-color: var(--cor-link-hover);
     transform: translateY(-2px);
 }
 
@@ -220,8 +281,9 @@ h2 {
     align-items: center;
     margin-bottom: 12px;
     padding-bottom: 12px;
-    border-bottom: 1px dashed #ddd;
+    border-bottom: 1px dashed var(--cor-separador);
     font-size: 1.05em;
+    transition: border-color 0.5s ease;
 }
 
 .cart-item:last-child {
@@ -236,36 +298,50 @@ h2 {
     color: var(--cor-principal);
     padding-top: 15px;
     border-top: 2px solid var(--cor-secundaria);
+    transition: color 0.5s ease, border-color 0.5s ease;
 }
 
 /* Barra de Pesquisa MELHORADA */
 .search-bar {
     margin-bottom: 40px;
     display: flex;
-    position: relative; /* Para posicionar o ícone */
+    position: relative;
     box-shadow: var(--sombra-leve);
     border-radius: 10px;
-    overflow: hidden; /* Garante que a sombra fique dentro do limite */
+    overflow: hidden;
+    transition: box-shadow 0.5s ease;
 }
 
 .search-bar input[type="text"] {
     flex-grow: 1;
-    padding: 15px 50px 15px 20px; /* Padding para o ícone */
-    border: none; /* Remove borda padrão */
+    padding: 15px 50px 15px 20px;
+    border: none;
     font-size: 1.1em;
     background-color: var(--cor-card-fundo);
     color: var(--cor-texto);
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .search-bar input[type="text"]::placeholder {
-    color: #999;
+    color: var(--cor-placeholder);
+    transition: color 0.5s ease;
 }
 
 .search-bar input[type="text"]:focus {
     outline: none;
-    box-shadow: inset 0 0 0 2px var(--cor-principal); /* Borda interna no foco */
+    box-shadow: inset 0 0 0 2px var(--cor-principal);
 }
 
+.search-bar .fa-search {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cor-placeholder);
+    font-size: 1.2em;
+    pointer-events: none;
+    transition: color 0.5s ease;
+}
 .search-bar button {
     background-color: var(--cor-principal);
     color: white;
@@ -280,28 +356,6 @@ h2 {
     justify-content: center;
 }
 
-.search-bar button:hover {
-    background-color: #e04a2c;
-}
-
-/* Ícone de pesquisa dentro do input (opcional, mas legal!) */
-.search-bar .fa-search {
-    position: absolute;
-    right: 80px; /* Ajusta conforme o padding do botão */
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    font-size: 1.2em;
-    pointer-events: none; /* Garante que o clique passe para o input */
-}
-.search-bar button .fa-search { /* Ícone dentro do botão, se preferir */
-    position: static;
-    transform: none;
-    margin-right: 8px;
-    color: white;
-}
-
-
 /* Estilos para a página de Avaliações MELHORADOS */
 .reviews-section {
     width: 90%;
@@ -312,13 +366,15 @@ h2 {
     border-radius: 10px;
     box-shadow: var(--sombra-media);
     flex-grow: 1;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 .review-form {
     margin-bottom: 50px;
     padding-bottom: 40px;
-    border-bottom: 1px solid #eee;
-    text-align: center; /* Centraliza o formulário */
+    border-bottom: 1px solid var(--cor-separador);
+    text-align: center;
+    transition: border-color 0.5s ease;
 }
 
 .review-form label {
@@ -327,23 +383,26 @@ h2 {
     font-weight: bold;
     color: var(--cor-texto);
     font-size: 1.1em;
+    transition: color 0.5s ease;
 }
 
 .review-form input[type="text"],
 .review-form textarea {
-    width: calc(100% - 40px); /* Ajusta o padding e borda */
+    width: calc(100% - 40px);
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-input-borda);
     border-radius: 10px;
     font-size: 1.1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--cor-card-fundo);
+    color: var(--cor-texto);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease, color 0.5s ease;
 }
 
 .review-form input[type="text"]:focus,
 .review-form textarea:focus {
     border-color: var(--cor-principal);
-    box-shadow: 0 0 0 3px rgba(255, 87, 51, 0.2);
+    box-shadow: 0 0 0 3px var(--cor-input-focus-shadow);
     outline: none;
 }
 
@@ -354,22 +413,24 @@ h2 {
 
 .rating-stars {
     margin-bottom: 20px;
-    display: inline-block; /* Para centralizar as estrelas */
+    display: inline-block;
+    direction: rtl; /* Para as estrelas aparecerem da direita para a esquerda */
 }
 
 .rating-stars label {
     display: inline-block;
     cursor: pointer;
-    font-size: 2.2em; /* Estrelas maiores */
-    color: #ccc; /* Estrela vazia */
+    font-size: 2.2em;
+    color: var(--cor-estrelas-vazias);
     margin: 0 3px;
     transition: color 0.2s ease;
+    direction: ltr; /* Volta a direção para o ícone */
 }
 
 .rating-stars label:hover,
 .rating-stars label:hover ~ label,
 .rating-stars input[type="radio"]:checked ~ label {
-    color: var(--cor-principal); /* Estrela preenchida */
+    color: var(--cor-principal);
 }
 
 /* Esconder os radios padrão */
@@ -380,19 +441,24 @@ h2 {
 .submit-review-btn {
     padding: 15px 30px;
     font-size: 1.2em;
-    border-radius: 50px; /* Botão mais arredondado */
+    border-radius: 50px;
     box-shadow: var(--sombra-leve);
 }
 
 
 .review-item {
-    background-color: #fcfcfc;
-    border: 1px solid #eee;
+    background-color: #fcfcfc; /* Manter um pouco diferente para o item */
+    border: 1px solid var(--cor-borda-card);
     border-radius: 10px;
     padding: 25px;
     margin-bottom: 25px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     animation: fadeIn 0.8s ease-out;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+body.dark-theme .review-item { /* Estilo específico para item de avaliação no tema escuro */
+    background-color: #333;
 }
 
 .review-header {
@@ -406,12 +472,15 @@ h2 {
     font-weight: bold;
     color: var(--cor-principal);
     font-size: 1.2em;
-    text-transform: capitalize; /* Primeira letra maiúscula */
+    text-transform: capitalize;
+    transition: color 0.5s ease;
 }
 
 .review-date {
     font-size: 0.95em;
-    color: #888;
+    color: var(--cor-texto); /* Usar cor de texto para melhor contraste */
+    opacity: 0.7;
+    transition: color 0.5s ease;
 }
 
 .review-rating {
@@ -420,15 +489,17 @@ h2 {
 .review-rating .star {
     color: var(--cor-principal);
     font-size: 1.4em;
+    transition: color 0.5s ease;
 }
 
 .review-comment {
     margin-top: 15px;
-    color: #555;
+    color: var(--cor-comentario-texto);
     line-height: 1.7;
-    border-left: 3px solid var(--cor-secundaria);
+    border-left: 3px solid var(--cor-comentario-borda);
     padding-left: 15px;
     font-style: italic;
+    transition: color 0.5s ease, border-color 0.5s ease;
 }
 
 /* Rodapé */
@@ -439,6 +510,7 @@ footer {
     padding: 2rem 0;
     margin-top: 3rem;
     box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.5s ease;
 }
 
 /* Responsividade Aprimorada */
@@ -452,9 +524,9 @@ footer {
         min-width: 100%;
     }
     .sidebar {
-        position: static; /* Desativa sticky em telas menores */
+        position: static;
         margin-top: 0;
-        order: -1; /* Coloca a barra lateral antes do conteúdo principal em mobile */
+        order: -1;
     }
     header h1 {
         font-size: 2.2rem;
@@ -471,14 +543,14 @@ footer {
         display: block;
     }
     .menu-item {
-        flex-direction: column; /* Coloca imagem e detalhes em coluna */
+        flex-direction: column;
         text-align: center;
     }
     .menu-item img {
         margin-bottom: 15px;
     }
     .item-details {
-        text-align: center; /* Centraliza o texto do item */
+        text-align: center;
     }
     .item-price {
         width: 100%;
@@ -493,10 +565,10 @@ footer {
         flex-direction: column;
     }
     .search-bar input[type="text"] {
-        padding-right: 20px; /* Remove padding extra para o ícone */
+        padding-right: 20px;
     }
     .search-bar .fa-search {
-        right: 20px; /* Ajusta ícone para o canto direito */
+        right: 20px;
     }
     .search-bar button {
         width: 100%;
@@ -508,6 +580,11 @@ footer {
     .review-form input[type="text"],
     .review-form textarea {
         width: calc(100% - 30px);
+    }
+    .theme-toggle-btn {
+        top: 10px;
+        right: 10px;
+        font-size: 1.5rem;
     }
 }
 
@@ -544,6 +621,6 @@ footer {
         width: calc(100% - 20px);
     }
     .rating-stars label {
-        font-size: 1.8em; /* Estrelas menores em telas muito pequenas */
+        font-size: 1.8em;
     }
 }
