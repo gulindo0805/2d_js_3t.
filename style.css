@@ -1,0 +1,218 @@
+/* Estilos CSS */
+:root {
+    --cor-principal: #FF5733; /* Laranja avermelhado, vibrante */
+    --cor-secundaria: #FFC300; /* Amarelo quente */
+    --cor-fundo: #F8F8F8; /* Cinza claro, quase branco */
+    --cor-texto: #333; /* Cinza escuro para texto */
+    --cor-card-fundo: #FFF; /* Branco para cards */
+    --sombra-leve: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--cor-principal);
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: var(--sombra-leve);
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+nav {
+    background-color: var(--cor-secundaria);
+    padding: 0.8rem 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: var(--cor-texto);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--cor-principal);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.main-content {
+    flex: 3;
+    min-width: 60%;
+}
+
+.sidebar {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--cor-card-fundo);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--sombra-leve);
+    position: sticky;
+    top: 20px; /* Para fixar a barra lateral na rolagem */
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--cor-principal);
+    border-bottom: 2px solid var(--cor-secundaria);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.category {
+    margin-bottom: 30px;
+}
+
+.menu-item {
+    display: flex;
+    background-color: var(--cor-card-fundo);
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: var(--sombra-leve);
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-details h3 {
+    margin: 0 0 5px 0;
+    color: var(--cor-texto);
+}
+
+.item-details p {
+    margin: 0 0 10px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.item-price {
+    font-weight: bold;
+    color: var(--cor-principal);
+    font-size: 1.1em;
+    text-align: right;
+    white-space: nowrap; /* Impede que o preço quebre linha */
+}
+
+.add-to-cart-btn {
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #e04a2c;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eee;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-total {
+    text-align: right;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    color: var(--cor-principal);
+}
+
+.checkout-btn {
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-btn:hover {
+    background-color: #e04a2c;
+}
+
+footer {
+    background-color: var(--cor-texto);
+    color: white;
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+}
+
+/* Responsividade Básica */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        margin: 1rem auto;
+    }
+    .main-content, .sidebar {
+        min-width: 100%;
+    }
+    .sidebar {
+        position: static; /* Desativar sticky em telas pequenas */
+        margin-top: 20px;
+    }
+    header h1 {
+        font-size: 2rem;
+    }
+}
