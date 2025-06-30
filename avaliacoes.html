@@ -30,7 +30,7 @@
             <input type="text" id="reviewerName" placeholder="Digite seu nome" required>
 
             <label for="reviewComment">Seu Comentário:</label>
-            <textarea id="reviewComment" placeholder="Compartilhe sua experiência..." rows="5" required></textarea>
+            <textarea id="reviewComment" placeholder="Compartilhe sua experiência conosco..." rows="5" required></textarea>
 
             <label>Sua Nota:</label>
             <div class="rating-stars">
@@ -74,6 +74,21 @@
                     <span class="star fa-regular fa-star"></span> </div>
                 <p class="review-comment">"O X-Salada é muito bom, mas a entrega demorou um pouco mais do que o esperado. Tirando isso, tudo ótimo!"</p>
             </div>
+
+            <div class="review-item">
+                <div class="review-header">
+                    <span class="reviewer-name">Ana Costa</span>
+                    <span class="review-date">26 de Junho de 2025</span>
+                </div>
+                <div class="review-rating">
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-solid fa-star"></span>
+                    <span class="star fa-regular fa-star"></span>
+                    <span class="star fa-regular fa-star"></span>
+                </div>
+                <p class="review-comment">"Lanche saboroso, mas a embalagem poderia ser melhor. Chegou um pouco amassado."</p>
+            </div>
         </div>
     </div>
 
@@ -86,14 +101,15 @@
         document.querySelector('.submit-review-btn').addEventListener('click', () => {
             const name = document.getElementById('reviewerName').value;
             const comment = document.getElementById('reviewComment').value;
-            const rating = document.querySelector('input[name="rating"]:checked');
+            const ratingInput = document.querySelector('input[name="rating"]:checked');
+            const ratingValue = ratingInput ? ratingInput.value : null;
 
-            if (name && comment && rating) {
-                alert(`Avaliação de ${name} com nota ${rating.value} enviada! (Em um sistema real, isso seria salvo no backend)`);
+            if (name && comment && ratingValue) {
+                alert(`Avaliação de ${name} com nota ${ratingValue} enviada! (Em um sistema real, isso seria salvo no backend)`);
                 // Em um sistema real, os dados seriam enviados para o backend
                 document.getElementById('reviewerName').value = '';
                 document.getElementById('reviewComment').value = '';
-                if (rating) rating.checked = false; // Desmarca a estrela
+                if (ratingInput) ratingInput.checked = false; // Desmarca a estrela
                 // O ideal seria recarregar as avaliações do backend
             } else {
                 alert('Por favor, preencha todos os campos e selecione uma nota para a avaliação.');
